@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Boutique bakery: ivory, charcoal, warm sand */
+  --color-ink: #1a1a1a;
+  --color-ivory: #faf8f5;
+  --color-paper: #fdfbf7;
+  --color-sand: #efeae2;
+  --color-sand-light: #f0ebe1;
+  --color-sand-border: #eae5de;
+  --color-caramel: #b45309;
+
+  /* Legacy `brand-*` → boutique tokens (avoid loud orange in components) */
+  --color-brand-50: #f7f5f2;
+  --color-brand-100: #efeae2;
+  --color-brand-200: #e5dfd6;
+  --color-brand-300: #c4b8a8;
+  --color-brand-400: #8c8175;
+  --color-brand-500: #4a4540;
+  --color-brand-600: #1a1a1a;
+  --color-brand-700: #141414;
+  --color-brand-800: #b45309;
+  --color-brand-900: #78350f;
+
+  --color-cream: #faf8f5;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, "Times New Roman", serif;
+}
+
+:root {
+  color-scheme: light;
+  --header-h: 88px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-h: 76px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+@utility font-display {
+  font-family: var(--font-serif);
+}
+
+@font-face {
+  font-family: "Brittany Signature";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/BrittanySignature.woff") format("woff");
+}
+
+@layer components {
+  .site-logo {
+    font-family: "Brittany Signature", "Segoe Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.32em;
+    font-size: 25px;
+    line-height: 1;
+    color: #8f6b2e;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

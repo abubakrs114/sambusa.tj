@@ -1,0 +1,4 @@
+import path from "node:path";
+
+export const STORE_FILE = path.join(process.cwd(), "data", "store.json");
+export const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");

@@ -1,0 +1,331 @@
+﻿import type { MenuSection, MenuSectionId, PaymentOption, Product } from "@/types";
+
+export const MENU_SECTIONS: readonly MenuSection[] = [
+  {
+    id: "sambusa",
+    navLabel: "Самбуса",
+    index: "01",
+    title: "🥟 Тандырная самбуса",
+    description: "С пылу с жару — рубленое мясо, золотистое тесто и аромат тандыра.",
+  },
+  {
+    id: "buns",
+    navLabel: "Булочки",
+    index: "02",
+    title: "🥐 Свежая выпечка и булочки",
+    description: "Утренняя сдоба, круассаны и ватрушки — мягкие, как в домашней пекарне.",
+  },
+  {
+    id: "pies",
+    navLabel: "Пироги",
+    index: "03",
+    title: "🥧 Сытные и сладкие пироги",
+    description: "Щедрые начинки для семейного стола — от мясного до яблочного.",
+  },
+  {
+    id: "bread",
+    navLabel: "Хлеб и Фатир",
+    index: "04",
+    title: "🫓 Традиционный хлеб и выпечка",
+    description: "Фатир из тандыра, кулча с кунжутом и хрустящий орзук к чаю.",
+  },
+  {
+    id: "cakes",
+    navLabel: "Торты",
+    index: "05",
+    title: "🎂 Праздничные торты",
+    description: "Торжественные десерты со сливочным кремом — для особых моментов.",
+  },
+  {
+    id: "sweets",
+    navLabel: "Сладости",
+    index: "06",
+    title: "🍯 Восточные сладости и печенье",
+    description: "Чак-чак в меду, орехи и рассыпчатое печенье к чаю.",
+  },
+  {
+    id: "drinks",
+    navLabel: "Напитки",
+    index: "07",
+    title: "🫖 Напитки",
+    description: "Чай, айран и компот — дополнение к горячей выпечке.",
+  },
+];
+
+/** Позиции каталога в порядке разделов. */
+export const PRODUCTS: readonly Product[] = [
+  // 01 — Тандырная самбуса
+  {
+    id: "samsa-beef",
+    name: "Самбуса с говядиной",
+    description: "Сочное рубленое мясо, лук и зира в слоёном тесте из тандыра.",
+    section: "sambusa",
+    price: 8,
+    unit: "1 шт • 120 г",
+    image: "/img/sambusa.png",
+    hoverImage: "/img/sambusai1.jpg",
+    badge: "hit",
+  },
+  {
+    id: "samsa-chicken",
+    name: "Самбуса с курицей",
+    description: "Нежное филе со специями и луком, румяная корочка.",
+    section: "sambusa",
+    price: 6,
+    unit: "1 шт • 110 г",
+    image: "/img/banner.png",
+  },
+  {
+    id: "samsa-pumpkin",
+    name: "Самбуса с тыквой",
+    description: "Сладкая запечённая тыква с луком и чёрным тмином.",
+    section: "sambusa",
+    price: 7,
+    unit: "1 шт • 110 г",
+    image: "/img/sambusa_pumkin.png",
+  },
+  {
+    id: "samsa-fried",
+    name: "Самбуса жареная",
+    description: "Хрустящая во фритюре — снаружи золото, внутри сочная начинка.",
+    section: "sambusa",
+    price: 7,
+    unit: "1 шт • 110 г",
+    placeholder: "sambusa",
+  },
+  {
+    id: "set-company-12",
+    name: "Сет «Компания»",
+    description: "12 самбус ассорти — для офиса, переговоров и семейного стола.",
+    section: "sambusa",
+    price: 85,
+    unit: "12 шт • ~1,4 кг",
+    image: "/img/sambusai1.jpg",
+    badge: "set",
+  },
+
+  // 02 — Булочки
+  {
+    id: "bun-cinnabon",
+    name: "Булочки «Синнабон»",
+    description: "Корица, сливочный крем и карамельная глазурь.",
+    section: "buns",
+    price: 16,
+    unit: "1 шт • 140 г",
+    placeholder: "bun",
+    badge: "new",
+  },
+  {
+    id: "bun-croissant",
+    name: "Булочки-круассаны",
+    description: "Воздушные слои масляного теста, лёгкий и хрустящий.",
+    section: "buns",
+    price: 12,
+    unit: "1 шт • 80 г",
+    placeholder: "bun",
+  },
+  {
+    id: "bun-poppy",
+    name: "Булочки с маком",
+    description: "Мягкая сдоба с щедрой начинкой из мака.",
+    section: "buns",
+    price: 8,
+    unit: "1 шт • 90 г",
+    placeholder: "bun",
+  },
+  {
+    id: "bun-vatrushka",
+    name: "Ватрушки с творогом",
+    description: "Нежный творог, ваниль и лёгкая сладость.",
+    section: "buns",
+    price: 9,
+    unit: "1 шт • 100 г",
+    placeholder: "bun",
+  },
+  {
+    id: "bun-moscow",
+    name: "Плюшки «Московские»",
+    description: "Классическая сдоба с сахарной крошкой.",
+    section: "buns",
+    price: 7,
+    unit: "1 шт • 85 г",
+    placeholder: "bun",
+  },
+  {
+    id: "bun-yeast-sugar",
+    name: "Сахарные булочки",
+    description: "Дрожжевое тесто, сахарная посыпка, аромат свежей выпечки.",
+    section: "buns",
+    price: 6,
+    unit: "1 шт • 80 г",
+    placeholder: "bun",
+  },
+
+  // 03 — Пироги
+  {
+    id: "pie-meat",
+    name: "Мясной пирог по-домашнему",
+    description: "Рубленое мясо, лук и специи в румяной корочке.",
+    section: "pies",
+    price: 65,
+    unit: "1 пирог • ~800 г",
+    placeholder: "pie",
+  },
+  {
+    id: "pie-apple",
+    name: "Яблочный пирог",
+    description: "Корица, карамель и сочные яблоки.",
+    section: "pies",
+    price: 45,
+    unit: "1 пирог • ~700 г",
+    placeholder: "pie",
+    badge: "new",
+  },
+
+  // 04 — Хлеб и фатир
+  {
+    id: "fatir-kat-kat",
+    name: "Фатир Кат-Кат",
+    description: "Слоёный фатир из тандыра с кунжутом.",
+    section: "bread",
+    price: 15,
+    unit: "1 шт • 300 г",
+    image: "/img/qalama-fatir.png",
+    badge: "hit",
+  },
+  {
+    id: "bread-kulcha",
+    name: "Кулча с кунжутом",
+    description: "Традиционная лепёшка с кунжутной посыпкой.",
+    section: "bread",
+    price: 6,
+    unit: "1 шт • 200 г",
+    placeholder: "bread",
+  },
+  {
+    id: "bread-orzuk",
+    name: "Орзук к чаю",
+    description: "Хрустящая порция для чаепития.",
+    section: "bread",
+    price: 18,
+    unit: "1 порция • 300 г",
+    placeholder: "bread",
+  },
+
+  // 05 — Торты
+  {
+    id: "cake-strawberry",
+    name: "Торт «Клубничный»",
+    description: "Сливочный крем и свежая клубничная начинка.",
+    section: "cakes",
+    price: 140,
+    unit: "1 торт • ~1,2 кг",
+    placeholder: "cake",
+  },
+  {
+    id: "cake-prague",
+    name: "Торт «Прага»",
+    description: "Насыщенный шоколад, орехи и бархатистый крем.",
+    section: "cakes",
+    price: 130,
+    unit: "1 торт • ~1,2 кг",
+    placeholder: "cake",
+    badge: "hit",
+  },
+
+  // 06 — Сладости
+  {
+    id: "chak-standard",
+    name: "Чак-чак «Стандарт»",
+    description: "Классический в меду — хруст и медовый аромат.",
+    section: "sweets",
+    price: 25,
+    unit: "1 порция • 250 г",
+    image: "/img/chakchak_1.jpg",
+    badge: "hit",
+  },
+  {
+    id: "chak-sesame-walnut",
+    name: "Чак-чак с кунжутом и орехом",
+    description: "Кунжут, грецкий орех и медовый сироп.",
+    section: "sweets",
+    price: 35,
+    unit: "1 порция • 300 г",
+    image: "/img/chakchak_2.jpg",
+  },
+  {
+    id: "chak-chocolate",
+    name: "Чак-чак с шоколадной глазурью",
+    description: "Медовая соломка под шоколадной глазурью.",
+    section: "sweets",
+    price: 30,
+    unit: "1 порция • 250 г",
+    image: "/img/chakc_4.png",
+  },
+  {
+    id: "chak-festive-large",
+    name: "Чак-чак праздничный большой",
+    description: "Большая порция для праздничного стола.",
+    section: "sweets",
+    price: 65,
+    unit: "1 порция • 500 г",
+    image: "/img/mainchak.png",
+    badge: "set",
+  },
+  {
+    id: "cookie-shortbread",
+    name: "Песочное печенье",
+    description: "Рассыпчатое, нежное, идеально к чаю.",
+    section: "sweets",
+    price: 18,
+    unit: "1 порция • 250 г",
+    placeholder: "sweet",
+  },
+
+  // 07 — Напитки
+  {
+    id: "drink-tea",
+    name: "Чай чёрный с лимоном и мятой",
+    description: "Термос 0,5 л — горячий, с лимоном и мятой.",
+    section: "drinks",
+    price: 8,
+    unit: "1 термос • 0,5 л",
+    drink: { kind: "tea", volume: "0.5 л" },
+  },
+  {
+    id: "drink-ayran",
+    name: "Домашний айран",
+    description: "Освежающий кисломолочный напиток.",
+    section: "drinks",
+    price: 8,
+    unit: "1 бутылка • 0,5 л",
+    drink: { kind: "ayran", volume: "0.5 л" },
+  },
+  {
+    id: "drink-compote",
+    name: "Компот из сухофруктов",
+    description: "Домашний, без лишней сладости.",
+    section: "drinks",
+    price: 15,
+    unit: "1 бутылка • 1 л",
+    drink: { kind: "compote", volume: "1 л" },
+  },
+];
+
+export const PRODUCTS_BY_ID: ReadonlyMap<string, Product> = new Map(
+  PRODUCTS.map((product) => [product.id, product]),
+);
+
+export const PRODUCTS_BY_SECTION: ReadonlyMap<MenuSectionId, readonly Product[]> =
+  new Map(
+    MENU_SECTIONS.map((section) => [
+      section.id,
+      PRODUCTS.filter((product) => product.section === section.id),
+    ]),
+  );
+
+export const PAYMENT_OPTIONS: readonly PaymentOption[] = [
+  { id: "cash", label: "Наличными", hint: "Оплата при самовывозе в пекарне" },
+  { id: "korti_milli", label: "Корти милли", hint: "Перевод на карту" },
+  { id: "dc", label: "DC", hint: "Dushanbe City / DC Wallet" },
+];
