@@ -1,0 +1,712 @@
+{
+  "version": 1,
+  "sections": [
+    {
+      "id": "sambusa",
+      "navLabel": "Самбуса",
+      "index": "01",
+      "title": "🥟 Тандырная самбуса",
+      "description": "С пылу с жару — рубленое мясо, золотистое тесто и аромат тандыра.",
+      "showOnStorefront": true
+    },
+    {
+      "id": "buns",
+      "navLabel": "Булочки",
+      "index": "02",
+      "title": "🥐 Свежая выпечка и булочки",
+      "description": "Утренняя сдоба, круассаны и ватрушки — мягкие, как в домашней пекарне.",
+      "showOnStorefront": true
+    },
+    {
+      "id": "pies",
+      "navLabel": "Пироги",
+      "index": "03",
+      "title": "🥧 Сытные и сладкие пироги",
+      "description": "Щедрые начинки для семейного стола — от мясного до яблочного.",
+      "showOnStorefront": true
+    },
+    {
+      "id": "bread",
+      "navLabel": "Фатир",
+      "index": "04",
+      "title": "🫓 Традиционный хлеб и выпечка",
+      "description": "Фатир из тандыра, кулча с кунжутом и хрустящий орзук к чаю.",
+      "showOnStorefront": true
+    },
+    {
+      "id": "cakes",
+      "navLabel": "Торты",
+      "index": "05",
+      "title": "🎂 Праздничные торты",
+      "description": "Торжественные десерты со сливочным кремом — для особых моментов.",
+      "showOnStorefront": true
+    },
+    {
+      "id": "sweets",
+      "navLabel": "Сладости",
+      "index": "06",
+      "title": "🍯 Восточные сладости и печенье",
+      "description": "Чак-чак в меду, орехи и рассыпчатое печенье к чаю.",
+      "showOnStorefront": true
+    },
+    {
+      "id": "drinks",
+      "navLabel": "Напитки",
+      "index": "07",
+      "title": "🫖 Напитки",
+      "description": "Чай, айран и компот — дополнение к горячей выпечке.",
+      "showOnStorefront": false
+    }
+  ],
+  "products": [
+    {
+      "id": "samsa-beef",
+      "name": "Самбуса с говядиной",
+      "description": "Сочное рубленое мясо, лук и зира в слоёном тесте из тандыра.",
+      "section": "sambusa",
+      "price": 8,
+      "unit": "1 шт • 120 г",
+      "image": "/img/samsagovi.png",
+      "hoverImage": "/uploads/mvti2ipn-xdlqdp.jpg",
+      "badge": "hit",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:25:10.070Z"
+    },
+    {
+      "id": "samsa-chicken",
+      "name": "Самбуса с курицей",
+      "description": "Нежное филе со специями и луком, румяная корочка.",
+      "section": "sambusa",
+      "price": 6,
+      "unit": "1 шт • 110 г",
+      "image": "/img/samsamurgi1.png",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:28:34.105Z",
+      "hoverImage": "/img/samsamurgi.png"
+    },
+    {
+      "id": "samsa-pumpkin",
+      "name": "Самбуса с тыквой",
+      "description": "Сладкая запечённая тыква с луком и чёрным тмином.",
+      "section": "sambusa",
+      "price": 7,
+      "unit": "1 шт • 110 г",
+      "image": "/img/tikva.png",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:28:54.049Z",
+      "hoverImage": "/img/sambusa_pumkin.png"
+    },
+    {
+      "id": "samsa-fried",
+      "name": "Самбуса жареная",
+      "description": "Хрустящая во фритюре — снаружи золото, внутри сочная начинка.",
+      "section": "sambusa",
+      "price": 7,
+      "unit": "1 шт • 110 г",
+      "placeholder": "sambusa",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:25:33.848Z",
+      "image": "/img/jareniysamsa.png",
+      "hoverImage": "/img/jareniysamsa2.png"
+    },
+    {
+      "id": "set-company-12",
+      "name": "Сет «Компания»",
+      "description": "12 самбус ассорти — для офиса, переговоров и семейного стола.",
+      "section": "sambusa",
+      "price": 85,
+      "unit": "12 шт • ~1,4 кг",
+      "image": "/img/sambusai1.jpg",
+      "badge": "set",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-10-29T06:27:03.156Z"
+    },
+    {
+      "id": "bun-cinnabon",
+      "name": "Булочки «Синнабон»",
+      "description": "Корица, сливочный крем и карамельная глазурь.",
+      "section": "buns",
+      "price": 16,
+      "unit": "1 шт • 140 г",
+      "badge": "new",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:00:32.970Z",
+      "image": "/img/sinabon2.png",
+      "hoverImage": "/img/sinabon.png"
+    },
+    {
+      "id": "bun-croissant",
+      "name": "Булочки-круассаны",
+      "description": "Воздушные слои масляного теста, лёгкий и хрустящий.",
+      "section": "buns",
+      "price": 12,
+      "unit": "1 шт • 80 г",
+      "placeholder": "bun",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:01:46.911Z",
+      "image": "/img/kurasan.png",
+      "hoverImage": "/img/kurasan2.png"
+    },
+    {
+      "id": "bun-poppy",
+      "name": "Булочки с маком",
+      "description": "Мягкая сдоба с щедрой начинкой из мака.",
+      "section": "buns",
+      "price": 8,
+      "unit": "1 шт • 90 г",
+      "placeholder": "bun",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:10:59.876Z",
+      "image": "/img/bulsmak.png"
+    },
+    {
+      "id": "bun-vatrushka",
+      "name": "Ватрушки с творогом",
+      "description": "Нежный творог, ваниль и лёгкая сладость.",
+      "section": "buns",
+      "price": 9,
+      "unit": "1 шт • 100 г",
+      "placeholder": "bun",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:13:11.071Z",
+      "image": "/img/vartushka.png",
+      "hoverImage": "/img/vartushka2.png"
+    },
+    {
+      "id": "bun-moscow",
+      "name": "Плюшки «Московские»",
+      "description": "Классическая сдоба с сахарной крошкой.",
+      "section": "buns",
+      "price": 7,
+      "unit": "1 шт • 85 г",
+      "placeholder": "bun",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:03:02.014Z",
+      "image": "/img/sahar2.png",
+      "hoverImage": "/img/sahar.png"
+    },
+    {
+      "id": "pie-meat",
+      "name": "Мясной пирог по-домашнему",
+      "description": "Рубленое мясо, лук и специи в румяной корочке.",
+      "section": "pies",
+      "price": 65,
+      "unit": "1 пирог • ~800 г",
+      "placeholder": "pie",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:05:20.250Z",
+      "image": "/img/pirog.png",
+      "hoverImage": "/img/pirog2.png"
+    },
+    {
+      "id": "pie-apple",
+      "name": "Яблочный пирог",
+      "description": "Корица, карамель и сочные яблоки.",
+      "section": "pies",
+      "price": 45,
+      "unit": "1 пирог • ~700 г",
+      "placeholder": "pie",
+      "badge": "new",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:06:08.533Z",
+      "image": "/img/yabloka.png",
+      "hoverImage": "/img/yabloka2.png"
+    },
+    {
+      "id": "fatir-kat-kat",
+      "name": "Фатир Кат-Кат",
+      "description": "Слоёный фатир из тандыра с кунжутом.",
+      "section": "bread",
+      "price": 15,
+      "unit": "1 шт • 300 г",
+      "image": "/img/qalama-fatir.png",
+      "badge": "hit",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-10-29T06:27:03.156Z"
+    },
+    {
+      "id": "bread-kulcha",
+      "name": "Кулча с кунжутом",
+      "description": "Традиционная лепёшка с кунжутной посыпкой.",
+      "section": "bread",
+      "price": 6,
+      "unit": "1 шт • 200 г",
+      "placeholder": "bread",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:16:33.779Z",
+      "image": "/img/kulcha.png",
+      "hoverImage": "/img/kulcha2.png"
+    },
+    {
+      "id": "bread-orzuk",
+      "name": "Орзук к чаю",
+      "description": "Хрустящая порция для чаепития.",
+      "section": "bread",
+      "price": 18,
+      "unit": "1 порция • 300 г",
+      "placeholder": "bread",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:07:06.800Z",
+      "image": "/img/bursak.png",
+      "hoverImage": "/img/bursak2.png"
+    },
+    {
+      "id": "cake-strawberry",
+      "name": "Торт «Клубничный»",
+      "description": "Сливочный крем и свежая клубничная начинка.",
+      "section": "cakes",
+      "price": 140,
+      "unit": "1 торт • ~1,2 кг",
+      "placeholder": "cake",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:03:56.728Z",
+      "image": "/img/tort2.png",
+      "hoverImage": "/img/tort.png"
+    },
+    {
+      "id": "cake-prague",
+      "name": "Торт «Прага»",
+      "description": "Насыщенный шоколад, орехи и бархатистый крем.",
+      "section": "cakes",
+      "price": 130,
+      "unit": "1 торт • ~1,2 кг",
+      "placeholder": "cake",
+      "badge": "hit",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:04:32.656Z",
+      "image": "/img/praga.png",
+      "hoverImage": "/img/praga2.png"
+    },
+    {
+      "id": "chak-standard",
+      "name": "Чак-чак «Стандарт»",
+      "description": "Классический в меду — хруст и медовый аромат.",
+      "section": "sweets",
+      "price": 25,
+      "unit": "1 порция • 250 г",
+      "image": "/img/chakchak_1.jpg",
+      "badge": "hit",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-10-29T06:27:03.156Z"
+    },
+    {
+      "id": "chak-sesame-walnut",
+      "name": "Чак-чак с кунжутом и орехом",
+      "description": "Кунжут, грецкий орех и медовый сироп.",
+      "section": "sweets",
+      "price": 35,
+      "unit": "1 порция • 300 г",
+      "image": "/img/oreh.png",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:09:36.115Z",
+      "hoverImage": "/img/chakchak_2.jpg"
+    },
+    {
+      "id": "chak-chocolate",
+      "name": "Чак-чак с шоколадной глазурью",
+      "description": "Медовая соломка под шоколадной глазурью.",
+      "section": "sweets",
+      "price": 30,
+      "unit": "1 порция • 250 г",
+      "image": "/img/chokolad.png",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-11-02T12:09:08.868Z",
+      "hoverImage": "/img/chakc_4.png"
+    },
+    {
+      "id": "chak-festive-large",
+      "name": "Чак-чак праздничный большой",
+      "description": "Большая порция для праздничного стола.",
+      "section": "sweets",
+      "price": 65,
+      "unit": "1 порция • 500 г",
+      "image": "/img/mainchak.png",
+      "badge": "set",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-10-29T06:27:03.156Z"
+    },
+    {
+      "id": "cookie-shortbread",
+      "name": "Песочное печенье",
+      "description": "Рассыпчатое, нежное, идеально к чаю.",
+      "section": "sweets",
+      "price": 18,
+      "unit": "1 порция • 250 г",
+      "placeholder": "sweet",
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-10-29T06:27:03.156Z"
+    },
+    {
+      "id": "drink-tea",
+      "name": "Чай чёрный с лимоном и мятой",
+      "description": "Термос 0,5 л — горячий, с лимоном и мятой.",
+      "section": "drinks",
+      "price": 8,
+      "unit": "1 термос • 0,5 л",
+      "drink": {
+        "kind": "tea",
+        "volume": "0.5 л"
+      },
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-10-29T06:27:03.156Z"
+    },
+    {
+      "id": "drink-ayran",
+      "name": "Домашний айран",
+      "description": "Освежающий кисломолочный напиток.",
+      "section": "drinks",
+      "price": 8,
+      "unit": "1 бутылка • 0,5 л",
+      "drink": {
+        "kind": "ayran",
+        "volume": "0.5 л"
+      },
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-10-29T06:27:03.156Z"
+    },
+    {
+      "id": "drink-compote",
+      "name": "Компот из сухофруктов",
+      "description": "Домашний, без лишней сладости.",
+      "section": "drinks",
+      "price": 15,
+      "unit": "1 бутылка • 1 л",
+      "drink": {
+        "kind": "compote",
+        "volume": "1 л"
+      },
+      "inStock": true,
+      "stopListMode": "sold_out",
+      "createdAt": "2026-10-29T06:27:03.156Z",
+      "updatedAt": "2026-10-29T06:27:03.156Z"
+    }
+  ],
+  "promotions": [
+    {
+      "id": "promo-mvthp27m-qlalsf",
+      "title": "В честь праздник Ид Аль Адха",
+      "targetType": "section",
+      "targetId": "sambusa",
+      "discountPercent": 10,
+      "startsAt": "2026-10-29T11:57:37.806Z",
+      "endsAt": "2026-10-30T11:57:37.806Z"
+    },
+    {
+      "id": "promo-mvv3r5te-kkmhn3",
+      "title": "11",
+      "targetType": "product",
+      "targetId": "samsa-beef",
+      "discountPercent": 10,
+      "startsAt": "2026-10-30T15:03:27.093Z",
+      "endsAt": "2026-10-31T15:03:27.093Z"
+    }
+  ],
+  "banner": {
+    "enabled": true,
+    "title": "Скидка 15% на предзаказ к празднику",
+    "subtitle": "Оформите заказ заранее — заберите горячим из тандыра.",
+    "buttonText": "Смотреть меню",
+    "buttonHref": "#section-sambusa",
+    "endsAt": "2026-11-01T06:27:00.000Z"
+  },
+  "settings": {
+    "tandyrStatus": "hot",
+    "whatsappPhoneE164": "992987441234",
+    "phoneDisplay": "+992 987 44 1234",
+    "pickupAddress": "г. Душанбе, ул. А. Джами 12 (ориентир: тандыр «SAMBUSA»)",
+    "pickupMapUrl": "https://www.google.com/maps/search/?api=1&query=38.5598,68.7870",
+    "hours": "Ежедневно с 8:00 до 20:00",
+    "city": "Dushanbe",
+    "instagramHref": "https://www.instagram.com/chakchak.dushanbe"
+  },
+  "orders": [
+    {
+      "id": "order-mvzh23do-9dg6kf",
+      "createdAt": "2026-11-02T16:27:09.850Z",
+      "customerName": "mm",
+      "customerPhone": "918102000",
+      "pickupLabel": "Через 30 мин",
+      "paymentLabel": "Наличными",
+      "comment": "",
+      "items": [
+        {
+          "productId": "samsa-chicken",
+          "name": "Самбуса с курицей",
+          "quantity": 1,
+          "unitPrice": 6,
+          "lineTotal": 6
+        },
+        {
+          "productId": "samsa-beef",
+          "name": "Самбуса с говядиной",
+          "quantity": 1,
+          "unitPrice": 8,
+          "lineTotal": 8
+        },
+        {
+          "productId": "samsa-pumpkin",
+          "name": "Самбуса с тыквой",
+          "quantity": 1,
+          "unitPrice": 7,
+          "lineTotal": 7
+        },
+        {
+          "productId": "samsa-fried",
+          "name": "Самбуса жареная",
+          "quantity": 1,
+          "unitPrice": 7,
+          "lineTotal": 7
+        },
+        {
+          "productId": "set-company-12",
+          "name": "Сет «Компания»",
+          "quantity": 1,
+          "unitPrice": 85,
+          "lineTotal": 85
+        },
+        {
+          "productId": "bun-moscow",
+          "name": "Плюшки «Московские»",
+          "quantity": 1,
+          "unitPrice": 7,
+          "lineTotal": 7
+        },
+        {
+          "productId": "bread-kulcha",
+          "name": "Кулча с кунжутом",
+          "quantity": 1,
+          "unitPrice": 6,
+          "lineTotal": 6
+        },
+        {
+          "productId": "fatir-kat-kat",
+          "name": "Фатир Кат-Кат",
+          "quantity": 1,
+          "unitPrice": 15,
+          "lineTotal": 15
+        },
+        {
+          "productId": "bread-orzuk",
+          "name": "Орзук к чаю",
+          "quantity": 1,
+          "unitPrice": 18,
+          "lineTotal": 18
+        },
+        {
+          "productId": "cake-strawberry",
+          "name": "Торт «Клубничный»",
+          "quantity": 1,
+          "unitPrice": 140,
+          "lineTotal": 140
+        },
+        {
+          "productId": "cake-prague",
+          "name": "Торт «Прага»",
+          "quantity": 1,
+          "unitPrice": 130,
+          "lineTotal": 130
+        },
+        {
+          "productId": "chak-festive-large",
+          "name": "Чак-чак праздничный большой",
+          "quantity": 1,
+          "unitPrice": 65,
+          "lineTotal": 65
+        },
+        {
+          "productId": "chak-chocolate",
+          "name": "Чак-чак с шоколадной глазурью",
+          "quantity": 1,
+          "unitPrice": 30,
+          "lineTotal": 30
+        },
+        {
+          "productId": "cookie-shortbread",
+          "name": "Песочное печенье",
+          "quantity": 1,
+          "unitPrice": 18,
+          "lineTotal": 18
+        }
+      ],
+      "total": 542,
+      "channel": "whatsapp",
+      "status": "new"
+    },
+    {
+      "id": "order-mvz2x73d-x5z6tj",
+      "createdAt": "2026-11-02T09:51:26.756Z",
+      "customerName": "MAKSUDOV MASUD",
+      "customerPhone": "988888888",
+      "pickupLabel": "Как можно скорее (~15 мин)",
+      "paymentLabel": "Наличными",
+      "comment": "",
+      "items": [
+        {
+          "productId": "bun-croissant",
+          "name": "Булочки-круассаны",
+          "quantity": 1,
+          "unitPrice": 12,
+          "lineTotal": 12
+        },
+        {
+          "productId": "bun-cinnabon",
+          "name": "Булочки «Синнабон»",
+          "quantity": 1,
+          "unitPrice": 16,
+          "lineTotal": 16
+        },
+        {
+          "productId": "bun-poppy",
+          "name": "Булочки с маком",
+          "quantity": 1,
+          "unitPrice": 8,
+          "lineTotal": 8
+        },
+        {
+          "productId": "bun-vatrushka",
+          "name": "Ватрушки с творогом",
+          "quantity": 1,
+          "unitPrice": 9,
+          "lineTotal": 9
+        },
+        {
+          "productId": "bun-moscow",
+          "name": "Плюшки «Московские»",
+          "quantity": 1,
+          "unitPrice": 7,
+          "lineTotal": 7
+        },
+        {
+          "productId": "pie-apple",
+          "name": "Яблочный пирог",
+          "quantity": 1,
+          "unitPrice": 45,
+          "lineTotal": 45
+        },
+        {
+          "productId": "pie-meat",
+          "name": "Мясной пирог по-домашнему",
+          "quantity": 1,
+          "unitPrice": 65,
+          "lineTotal": 65
+        }
+      ],
+      "total": 162,
+      "channel": "whatsapp",
+      "status": "completed"
+    }
+  ],
+  "categories": [
+    {
+      "id": "sambusa",
+      "name": "Самбуса",
+      "heading": "Тандырная самбуса",
+      "description": "С пылу с жару — рубленое мясо, золотистое тесто и аромат тандыра.",
+      "icon": "🥟",
+      "order": 1,
+      "isActive": true
+    },
+    {
+      "id": "buns",
+      "name": "Булочки",
+      "heading": "Свежая выпечка и булочки",
+      "description": "Утренняя сдоба, круассаны и ватрушки — мягкие, как в домашней пекарне.",
+      "icon": "🥐",
+      "order": 2,
+      "isActive": true
+    },
+    {
+      "id": "pies",
+      "name": "Пироги",
+      "heading": "Сытные и сладкие пироги",
+      "description": "Щедрые начинки для семейного стола — от мясного до яблочного.",
+      "icon": "🥧",
+      "order": 3,
+      "isActive": true
+    },
+    {
+      "id": "bread",
+      "name": "Фатир",
+      "heading": "Традиционный хлеб и выпечка",
+      "description": "Фатир из тандыра, кулча с кунжутом и хрустящий орзук к чаю.",
+      "icon": "🫓",
+      "order": 4,
+      "isActive": true
+    },
+    {
+      "id": "cakes",
+      "name": "Торты",
+      "heading": "Праздничные торты",
+      "description": "Торжественные десерты со сливочным кремом — для особых моментов.",
+      "icon": "🎂",
+      "order": 5,
+      "isActive": true
+    },
+    {
+      "id": "sweets",
+      "name": "Сладости",
+      "heading": "Восточные сладости и печенье",
+      "description": "Чак-чак в меду, орехи и рассыпчатое печенье к чаю.",
+      "icon": "🍯",
+      "order": 6,
+      "isActive": true
+    },
+    {
+      "id": "drinks",
+      "name": "Напитки",
+      "heading": "Напитки",
+      "description": "Чай, айран и компот — дополнение к горячей выпечке.",
+      "icon": "🫖",
+      "order": 7,
+      "isActive": false
+    }
+  ]
+}

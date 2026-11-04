@@ -34,7 +34,7 @@ yarn-error.log*
 .env*
 
 # runtime store & uploads
-/data/store.json
+#/data/store.json
 /public/uploads/*
 !/public/uploads/.gitkeep
 
