@@ -67,12 +67,12 @@
       "price": 8,
       "unit": "1 шт • 120 г",
       "image": "/img/samsagovi.png",
-      "hoverImage": "/uploads/mvti2ipn-xdlqdp.jpg",
+      "hoverImage": "/img/sambusaigovi.jpg",
       "badge": "hit",
       "inStock": true,
       "stopListMode": "sold_out",
       "createdAt": "2026-10-29T06:27:03.156Z",
-      "updatedAt": "2026-11-02T12:25:10.070Z"
+      "updatedAt": "2026-11-05T09:08:05.730Z"
     },
     {
       "id": "samsa-chicken",

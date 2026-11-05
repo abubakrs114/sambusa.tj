@@ -51,8 +51,9 @@ export function Footer() {
   ] as const;
 
   return (
-    <footer className="mt-auto border-t border-[#EFEAE2] bg-[#1A1A1A] text-neutral-400">
-      <div className="mx-auto max-w-7xl px-4 pt-10 pb-[calc(7rem+env(safe-area-inset-bottom))] sm:px-6 sm:pb-10 lg:px-8">
+    <footer className="mt-auto bg-[#FAF8F5] text-neutral-400">
+      <div className="border-t border-[#EFEAE2] bg-[#1A1A1A]">
+      <div className="mx-auto max-w-7xl px-4 pt-10 pb-28 sm:px-6 sm:pb-10 lg:px-8">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
             <p className="font-serif text-xl font-medium tracking-tight text-[#FAF8F5]">
@@ -107,6 +108,11 @@ export function Footer() {
           © SAMBUSA.TJ · Душанбе, Таджикистан
         </p>
       </div>
+      </div>
+      <div
+        aria-hidden
+        className="h-[env(safe-area-inset-bottom,0px)] bg-[#FAF8F5]"
+      />
     </footer>
   );
 }

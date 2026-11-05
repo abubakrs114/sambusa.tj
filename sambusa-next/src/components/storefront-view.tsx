@@ -11,9 +11,9 @@ import { PromoCountdownBanner } from "@/components/promo-countdown-banner";
 
 export function StorefrontView() {
   return (
-    <>
+    <div className="relative flex min-h-dvh w-full flex-col bg-[#FAF8F5]">
       <Header />
-      <main id="top" className="flex-1">
+      <main id="top" className="w-full flex-1 bg-[#FAF8F5]">
         <Hero />
         <PromoCountdownBanner />
         <MenuSection />
@@ -22,6 +22,6 @@ export function StorefrontView() {
       <MobileCartBar />
       <CheckoutDrawer />
       <OrderSentToast />
-    </>
+    </div>
   );
 }

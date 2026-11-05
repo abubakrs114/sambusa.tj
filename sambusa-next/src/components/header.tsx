@@ -50,36 +50,28 @@ function CartControl({ compact }: { compact?: boolean }) {
     () => 0,
   );
 
-  const badge =
-    totalCount > 0 ? (
-      <motion.span
-        key={totalCount}
-        initial={{ scale: 0.4, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 520, damping: 14 }}
-        className="absolute -top-0.5 -right-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-[#1A1A1A] px-1 text-[11px] leading-none font-semibold text-white ring-2 ring-[#FAF8F5] tabular-nums"
-      >
-        {totalCount}
-      </motion.span>
-    ) : null;
-
   if (compact) {
     return (
       <button
         type="button"
         onClick={open}
         aria-label={`Открыть корзину, ${totalCount} ${pluralize(totalCount, ["товар", "товара", "товаров"])}`}
-        className="relative grid size-9 place-items-center rounded-full bg-neutral-100 text-[#1A1A1A] transition-colors hover:bg-neutral-200 active:scale-95 sm:hidden"
+        className="relative grid size-9 shrink-0 place-items-center rounded-full bg-neutral-100 text-[#1A1A1A] transition-colors hover:bg-neutral-200 active:scale-95 sm:hidden"
       >
         <motion.span
-          key={cartPulse}
-          animate={cartPulse > 0 ? { scale: [1, 1.15, 1] } : { scale: 1 }}
-          transition={{ duration: 0.3 }}
+          animate={{
+            scale: cartPulse === 0 ? 1 : cartPulse % 2 === 0 ? [1, 1.12, 1] : [1, 1.14, 1],
+          }}
+          transition={{ duration: 0.28 }}
           className="inline-flex"
         >
           <ShoppingBag className="size-4" strokeWidth={1.5} aria-hidden />
         </motion.span>
-        {badge}
+        {totalCount > 0 && (
+          <span className="absolute -top-0.5 -right-0.5 z-10 grid h-5 min-w-5 place-items-center rounded-full bg-[#1A1A1A] px-1 text-[11px] leading-none font-semibold text-white ring-2 ring-[#FAF8F5] tabular-nums">
+            {totalCount}
+          </span>
+        )}
       </button>
     );
   }
@@ -89,27 +81,22 @@ function CartControl({ compact }: { compact?: boolean }) {
       type="button"
       onClick={open}
       aria-label={`Открыть корзину, ${totalCount} ${pluralize(totalCount, ["товар", "товара", "товаров"])}`}
-      className="relative hidden h-11 items-center gap-2 rounded-full border border-[#1A1A1A] bg-[#1A1A1A] pr-4 pl-3.5 text-xs font-medium tracking-wider text-white uppercase transition-all hover:bg-neutral-800 active:scale-95 sm:inline-flex sm:pr-5"
+      className="relative hidden h-11 shrink-0 items-center gap-2 rounded-full border border-[#1A1A1A] bg-[#1A1A1A] pr-4 pl-3.5 text-xs font-medium tracking-wider text-white uppercase transition-all hover:bg-neutral-800 active:scale-95 sm:inline-flex sm:pr-5"
     >
       <motion.span
-        key={cartPulse}
-        animate={cartPulse > 0 ? { scale: [1, 1.2, 1] } : { scale: 1 }}
-        transition={{ duration: 0.3 }}
+        animate={{
+          scale: cartPulse === 0 ? 1 : cartPulse % 2 === 0 ? [1, 1.12, 1] : [1, 1.14, 1],
+        }}
+        transition={{ duration: 0.28 }}
         className="inline-flex"
       >
         <ShoppingBag className="size-4" strokeWidth={1.5} aria-hidden />
       </motion.span>
       <span>{totalCount > 0 ? formatPrice(totalPrice) : "Корзина"}</span>
       {totalCount > 0 && (
-        <motion.span
-          key={totalCount}
-          initial={{ scale: 0.4, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 520, damping: 14 }}
-          className="absolute -top-1 -right-1 grid h-5 min-w-5 place-items-center rounded-full bg-white px-1 text-[11px] leading-none font-semibold text-[#1A1A1A] ring-2 ring-[#FAF8F5] tabular-nums"
-        >
+        <span className="absolute -top-1 -right-1 z-10 grid h-5 min-w-5 place-items-center rounded-full bg-white px-1 text-[11px] leading-none font-semibold text-[#1A1A1A] ring-2 ring-[#FAF8F5] tabular-nums">
           {totalCount}
-        </motion.span>
+        </span>
       )}
     </button>
   );

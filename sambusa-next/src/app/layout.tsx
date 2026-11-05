@@ -37,7 +37,9 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
   themeColor: "#FAF8F5",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -45,9 +47,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="ru"
       data-scroll-behavior="smooth"
-      className={`${manrope.variable} ${cormorant.variable} h-full antialiased`}
+      className={`${manrope.variable} ${cormorant.variable} h-full min-h-dvh bg-[#FAF8F5] antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-[#FAF8F5] text-[#1A1A1A]">
+      <body className="flex min-h-dvh w-full flex-col bg-[#FAF8F5] text-[#1A1A1A]">
         <Providers>{children}</Providers>
       </body>
     </html>
