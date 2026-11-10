@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 
+import { readApiError } from "@/lib/admin-fetch";
 import type { DataStore } from "@/types/store";
 
 export function useAdminStore(initial?: DataStore) {
@@ -14,11 +15,16 @@ export function useAdminStore(initial?: DataStore) {
     setError(null);
     try {
       const response = await fetch("/api/admin/store", { cache: "no-store" });
-      if (!response.ok) throw new Error("Не удалось загрузить данные");
+      if (!response.ok) {
+        throw new Error(await readApiError(response));
+      }
       const data = (await response.json()) as DataStore;
       setStore(data);
-    } catch {
-      setError("Ошибка загрузки. Проверьте вход и соединение.");
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Ошибка загрузки. Проверьте вход и соединение.";
+      setError(message);
+      throw err;
     } finally {
       setLoading(false);
     }

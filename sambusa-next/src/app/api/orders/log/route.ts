@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { newId } from "@/lib/admin-api";
+import { NO_STORE_HEADERS } from "@/lib/api-cache";
 import { toStorefrontProduct } from "@/lib/store/pricing";
 import { readDataStore, updateDataStore } from "@/lib/store/db";
 import type { OrderLineRecord, OrderRecord } from "@/types/store";
@@ -20,7 +21,10 @@ export async function POST(request: Request) {
   try {
     body = (await request.json()) as LogBody;
   } catch {
-    return NextResponse.json({ error: "Некорректный JSON" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Некорректный JSON" },
+      { status: 400, headers: NO_STORE_HEADERS },
+    );
   }
 
   const store = await readDataStore();
@@ -41,7 +45,10 @@ export async function POST(request: Request) {
   }
 
   if (lines.length === 0) {
-    return NextResponse.json({ error: "Пустой заказ" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Пустой заказ" },
+      { status: 400, headers: NO_STORE_HEADERS },
+    );
   }
 
   const total = lines.reduce((sum, line) => sum + line.lineTotal, 0);
@@ -64,5 +71,8 @@ export async function POST(request: Request) {
     draft.orders = draft.orders.slice(0, 200);
   });
 
-  return NextResponse.json({ ok: true, orderId: record.id });
+  return NextResponse.json(
+    { ok: true, orderId: record.id },
+    { headers: NO_STORE_HEADERS },
+  );
 }

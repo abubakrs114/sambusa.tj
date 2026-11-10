@@ -1,8 +1,7 @@
-import { NextResponse } from "next/server";
-
 import { isAdminAuthenticated } from "@/lib/admin-auth";
+import { jsonOk } from "@/lib/admin-api";
 
 export async function GET() {
   const authenticated = await isAdminAuthenticated();
-  return NextResponse.json({ authenticated });
+  return jsonOk({ authenticated });
 }

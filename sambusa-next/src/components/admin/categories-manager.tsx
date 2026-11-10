@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { AdminShell } from "@/components/admin/admin-shell";
 import { useAdminStore } from "@/components/admin/use-admin-store";
+import { adminFetch } from "@/lib/admin-fetch";
 import type { StoreCategory } from "@/types/store";
 
 function emptyCategory(order: number): StoreCategory {
@@ -64,21 +65,24 @@ export function CategoriesManager({ initial }: { initial?: import("@/types/store
     setMessage(null);
     try {
       const payload = categories.map((item, index) => ({ ...item, order: index + 1 }));
-      const response = await fetch("/api/admin/categories", {
+      const response = await adminFetch("/api/admin/categories", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ categories: payload }),
       });
-      if (!response.ok) {
-        setMessage("Не удалось сохранить");
-        return;
-      }
       const saved = (await response.json()) as StoreCategory[];
       setCategories(saved);
-      await reload();
+      try {
+        await reload();
+      } catch {
+        /* локальные категории уже сохранены ответом API */
+      }
       setMessage("Сохранено — порядок и названия обновлены на витрине");
-    } catch {
-      setMessage("Ошибка сети");
+    } catch (error) {
+      const text =
+        error instanceof Error ? error.message : "Не удалось сохранить категории";
+      setMessage(text);
+      window.alert(text);
     } finally {
       setSaving(false);
     }

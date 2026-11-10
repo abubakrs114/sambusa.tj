@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { AdminShell } from "@/components/admin/admin-shell";
 import { useAdminStore } from "@/components/admin/use-admin-store";
+import { adminFetch } from "@/lib/admin-fetch";
 import { formatPrice } from "@/lib/format";
 import {
   ORDER_PERIOD_LABELS,
@@ -68,12 +69,11 @@ export function OrdersManager({ initial }: { initial?: import("@/types/store").D
   async function setOrderStatus(orderId: string, status: OrderStatus) {
     setSavingId(orderId);
     try {
-      const response = await fetch(`/api/admin/orders/${encodeURIComponent(orderId)}`, {
+      const response = await adminFetch(`/api/admin/orders/${encodeURIComponent(orderId)}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
       });
-      if (!response.ok) return;
       const updated = (await response.json()) as OrderRecord;
       setStore((prev) => {
         if (!prev) return prev;
@@ -82,6 +82,8 @@ export function OrdersManager({ initial }: { initial?: import("@/types/store").D
           orders: prev.orders.map((order) => (order.id === updated.id ? updated : order)),
         };
       });
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Не удалось обновить статус");
     } finally {
       setSavingId(null);
     }

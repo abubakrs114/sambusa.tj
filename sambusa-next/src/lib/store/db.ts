@@ -8,9 +8,17 @@ import {
   getStoreReadPaths,
   getStoreWritePath,
   isVercelRuntime,
+  STORE_FILE_TMP,
 } from "@/lib/store/paths";
 import { createSeedStore } from "@/lib/store/seed";
 import type { DataStore } from "@/types/store";
+
+/** Кэш в памяти процесса (один warm serverless-инстанс на Vercel). */
+let memoryStore: DataStore | null = null;
+
+function cloneStore(store: DataStore): DataStore {
+  return structuredClone(store);
+}
 
 function sanitizeStoreImagePaths(store: DataStore): DataStore {
   for (const product of store.products) {
@@ -63,10 +71,18 @@ async function readStoreFromDisk(): Promise<DataStore | null> {
 export async function readDataStore(): Promise<DataStore> {
   await connection();
 
+  if (memoryStore) {
+    return cloneStore(memoryStore);
+  }
+
   const existing = await readStoreFromDisk();
-  if (existing) return existing;
+  if (existing) {
+    memoryStore = cloneStore(existing);
+    return cloneStore(existing);
+  }
 
   const seed = createSeedStore();
+  memoryStore = cloneStore(seed);
 
   if (!isVercelRuntime()) {
     try {
@@ -76,7 +92,7 @@ export async function readDataStore(): Promise<DataStore> {
     }
   }
 
-  return seed;
+  return cloneStore(seed);
 }
 
 export async function writeDataStore(store: DataStore): Promise<void> {
@@ -95,16 +111,24 @@ export async function writeDataStore(store: DataStore): Promise<void> {
   } catch (error) {
     if (isVercelRuntime()) {
       try {
-        await writeFile(targetFile, payload, "utf8");
-        return;
+        await writeFile(STORE_FILE_TMP, payload, "utf8");
       } catch (retryError) {
         console.error("[store] failed to write /tmp/store.json:", retryError);
-        throw retryError;
+        throw new Error(
+          "Не удалось сохранить данные на сервере (файловая система Vercel). Ошибка: " +
+            (retryError instanceof Error ? retryError.message : String(retryError)),
+        );
       }
+    } else {
+      console.error("[store] failed to write store:", error);
+      throw new Error(
+        "Не удалось сохранить store.json: " +
+          (error instanceof Error ? error.message : String(error)),
+      );
     }
-    console.error("[store] failed to write store:", error);
-    throw error;
   }
+
+  memoryStore = cloneStore(store);
 }
 
 export async function updateDataStore(
@@ -113,5 +137,5 @@ export async function updateDataStore(
   const store = await readDataStore();
   await mutator(store);
   await writeDataStore(store);
-  return store;
+  return cloneStore(store);
 }

@@ -4,30 +4,44 @@ import { useState } from "react";
 
 import { AdminShell } from "@/components/admin/admin-shell";
 import { useAdminStore } from "@/components/admin/use-admin-store";
+import { adminFetch } from "@/lib/admin-fetch";
 import type { BakerySettings, TandyrStatus } from "@/types/store";
 
 export function SettingsManager({ initial }: { initial?: import("@/types/store").DataStore }) {
-  const { store, loading, reload } = useAdminStore(initial);
+  const { store, loading, setStore } = useAdminStore(initial);
   const [draft, setDraft] = useState<BakerySettings | null>(null);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const settings = draft ?? store?.settings ?? null;
 
   async function save() {
     if (!settings) return;
     setSaving(true);
-    await fetch("/api/admin/settings", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(settings),
-    });
-    setSaving(false);
-    setDraft(null);
-    await reload();
+    setSaveError(null);
+    try {
+      const response = await adminFetch("/api/admin/settings", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(settings),
+      });
+      const saved = (await response.json()) as BakerySettings;
+      setStore((prev) => (prev ? { ...prev, settings: saved } : prev));
+      setDraft(saved);
+      window.alert("Настройки сохранены");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Не удалось сохранить настройки";
+      setSaveError(message);
+      window.alert(message);
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
     <AdminShell title="Настройки пекарни">
       {loading && <p className="text-sm text-neutral-500">Загрузка…</p>}
+      {saveError && <p className="mb-3 text-sm text-red-600">{saveError}</p>}
       {settings && (
         <section className="max-w-2xl space-y-4 rounded-2xl border border-neutral-200 bg-white p-5">
           <label className="block">
@@ -66,7 +80,7 @@ export function SettingsManager({ initial }: { initial?: import("@/types/store")
           </label>
 
           <label className="block">
-            <span className="mb-1 block text-sm font-medium">Адрес самовыvоза</span>
+            <span className="mb-1 block text-sm font-medium">Адрес самовывоза</span>
             <textarea
               rows={2}
               value={settings.pickupAddress}

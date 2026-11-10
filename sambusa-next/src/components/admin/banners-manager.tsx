@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { AdminShell } from "@/components/admin/admin-shell";
 import { useAdminStore } from "@/components/admin/use-admin-store";
+import { adminFetch } from "@/lib/admin-fetch";
 import type { PromoBanner } from "@/types/store";
 
 function toLocalInput(iso: string) {
@@ -17,27 +18,39 @@ function fromLocalInput(value: string) {
 }
 
 export function BannersManager({ initial }: { initial?: import("@/types/store").DataStore }) {
-  const { store, loading, reload } = useAdminStore(initial);
+  const { store, loading, setStore } = useAdminStore(initial);
   const [draft, setDraft] = useState<PromoBanner | null>(null);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const banner = draft ?? store?.banner ?? null;
 
   async function save() {
     if (!banner) return;
     setSaving(true);
-    await fetch("/api/admin/banner", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(banner),
-    });
-    setSaving(false);
-    setDraft(null);
-    await reload();
+    setSaveError(null);
+    try {
+      const response = await adminFetch("/api/admin/banner", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(banner),
+      });
+      const saved = (await response.json()) as PromoBanner;
+      setStore((prev) => (prev ? { ...prev, banner: saved } : prev));
+      setDraft(saved);
+      window.alert("Баннер сохранён");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Не удалось сохранить баннер";
+      setSaveError(message);
+      window.alert(message);
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
     <AdminShell title="Промо-баннеры">
       {loading && <p className="text-sm text-neutral-500">Загрузка…</p>}
+      {saveError && <p className="mb-3 text-sm text-red-600">{saveError}</p>}
       {banner && (
         <section className="max-w-2xl rounded-2xl border border-neutral-200 bg-white p-5">
           <label className="mb-4 flex items-center gap-2">

@@ -1,6 +1,4 @@
-import { NextResponse } from "next/server";
-
-import { jsonError, newId, requireAdmin } from "@/lib/admin-api";
+import { jsonError, jsonOk, newId, requireAdmin } from "@/lib/admin-api";
 import { normalizeProductImageUrl } from "@/lib/normalize-image-url";
 import { updateDataStore } from "@/lib/store/db";
 import type { MenuSectionId, ProductBadge, ProductPlaceholderKind } from "@/types";
@@ -69,16 +67,21 @@ export async function POST(request: Request) {
   const product = parseProductBody(body);
   if (!product) return jsonError("Проверьте поля товара");
 
-  const store = await updateDataStore((draft) => {
-    if (draft.products.some((item) => item.id === product.id)) {
-      throw new Error("DUPLICATE");
+  try {
+    await updateDataStore((draft) => {
+      if (draft.products.some((item) => item.id === product.id)) {
+        throw new Error("DUPLICATE");
+      }
+      draft.products.push(product);
+    });
+    return jsonOk(product, { status: 201 });
+  } catch (error) {
+    if (error instanceof Error && error.message === "DUPLICATE") {
+      return jsonError("Товар с таким ID уже есть");
     }
-    draft.products.push(product);
-  }).catch((error) => {
-    if (error instanceof Error && error.message === "DUPLICATE") return null;
-    throw error;
-  });
-
-  if (!store) return jsonError("Товар с таким ID уже есть");
-  return NextResponse.json(product, { status: 201 });
+    return jsonError(
+      error instanceof Error ? error.message : "Не удалось создать товар",
+      500,
+    );
+  }
 }

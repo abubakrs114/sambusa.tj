@@ -1,6 +1,4 @@
-import { NextResponse } from "next/server";
-
-import { jsonError, newId, requireAdmin } from "@/lib/admin-api";
+import { jsonError, jsonOk, newId, requireAdmin } from "@/lib/admin-api";
 import { categoriesToSections } from "@/lib/store/categories";
 import { updateDataStore } from "@/lib/store/db";
 import type { StoreCategory } from "@/types/store";
@@ -49,10 +47,16 @@ export async function PUT(request: Request) {
     category.order = index + 1;
   });
 
-  const store = await updateDataStore((draft) => {
-    draft.categories = parsed;
-    draft.sections = categoriesToSections(parsed);
-  });
-
-  return NextResponse.json(store.categories);
+  try {
+    const store = await updateDataStore((draft) => {
+      draft.categories = parsed;
+      draft.sections = categoriesToSections(parsed);
+    });
+    return jsonOk(store.categories);
+  } catch (error) {
+    return jsonError(
+      error instanceof Error ? error.message : "Не удалось сохранить категории",
+      500,
+    );
+  }
 }

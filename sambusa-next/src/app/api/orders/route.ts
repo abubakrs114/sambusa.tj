@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { newId } from "@/lib/admin-api";
+import { NO_STORE_HEADERS } from "@/lib/api-cache";
 import { PAYMENT_OPTIONS } from "@/data/catalog";
 import { MAX_QUANTITY } from "@/lib/cart-store";
 import { formatPickupTimeLabel } from "@/lib/pickup";
@@ -14,7 +15,10 @@ const PAYMENT_IDS = new Set<string>(PAYMENT_OPTIONS.map((option) => option.id));
 const PICKUP_IDS = new Set<string>(["asap", "30min", "custom"]);
 
 function badRequest(message: string) {
-  return NextResponse.json({ error: message }, { status: 400 });
+  return NextResponse.json(
+    { error: message },
+    { status: 400, headers: NO_STORE_HEADERS },
+  );
 }
 
 /** Резервный API (основной канал — WhatsApp). */
@@ -97,5 +101,5 @@ export async function POST(request: Request) {
   console.info("[order]", { orderId, record });
 
   const response: OrderResponse = { orderId, total, itemsCount };
-  return NextResponse.json(response, { status: 201 });
+  return NextResponse.json(response, { status: 201, headers: NO_STORE_HEADERS });
 }

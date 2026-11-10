@@ -1,6 +1,4 @@
-import { NextResponse } from "next/server";
-
-import { jsonError, newId, requireAdmin } from "@/lib/admin-api";
+import { jsonError, jsonOk, newId, requireAdmin } from "@/lib/admin-api";
 import { updateDataStore } from "@/lib/store/db";
 import type { Promotion, PromotionTargetType } from "@/types/store";
 
@@ -44,9 +42,15 @@ export async function POST(request: Request) {
   const promotion = parsePromotion(body);
   if (!promotion) return jsonError("Проверьте поля акции");
 
-  await updateDataStore((draft) => {
-    draft.promotions.push(promotion);
-  });
-
-  return NextResponse.json(promotion, { status: 201 });
+  try {
+    await updateDataStore((draft) => {
+      draft.promotions.push(promotion);
+    });
+    return jsonOk(promotion, { status: 201 });
+  } catch (error) {
+    return jsonError(
+      error instanceof Error ? error.message : "Не удалось создать акцию",
+      500,
+    );
+  }
 }

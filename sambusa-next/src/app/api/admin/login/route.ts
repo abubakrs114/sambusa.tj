@@ -1,12 +1,11 @@
-import { NextResponse } from "next/server";
-
 import {
   ADMIN_COOKIE,
   adminCookieOptions,
   createAdminSessionToken,
   verifyAdminPassword,
 } from "@/lib/admin-auth";
-import { jsonError } from "@/lib/admin-api";
+import { jsonError, jsonOk } from "@/lib/admin-api";
+import { NO_STORE_HEADERS } from "@/lib/api-cache";
 
 export async function POST(request: Request) {
   if (!process.env.ADMIN_PASSWORD) {
@@ -26,7 +25,10 @@ export async function POST(request: Request) {
   }
 
   const token = await createAdminSessionToken();
-  const response = NextResponse.json({ ok: true });
+  const response = jsonOk({ ok: true });
   response.cookies.set(ADMIN_COOKIE, token, adminCookieOptions(7 * 24 * 60 * 60));
+  for (const [key, value] of Object.entries(NO_STORE_HEADERS)) {
+    response.headers.set(key, value);
+  }
   return response;
 }

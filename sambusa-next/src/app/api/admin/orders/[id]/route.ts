@@ -1,6 +1,4 @@
-import { NextResponse } from "next/server";
-
-import { jsonError, requireAdmin } from "@/lib/admin-api";
+import { jsonError, jsonOk, requireAdmin } from "@/lib/admin-api";
 import { updateDataStore } from "@/lib/store/db";
 import type { OrderStatus } from "@/types/store";
 
@@ -26,17 +24,21 @@ export async function PATCH(
   }
 
   let found = false;
-  const store = await updateDataStore((draft) => {
-    const order = draft.orders.find((item) => item.id === id);
-    if (!order) return;
-    order.status = body.status;
-    found = true;
-  });
+  try {
+    const store = await updateDataStore((draft) => {
+      const order = draft.orders.find((item) => item.id === id);
+      if (!order) return;
+      order.status = body.status;
+      found = true;
+    });
 
-  if (!found) {
-    return NextResponse.json({ error: "Заказ не найден" }, { status: 404 });
+    if (!found) return jsonError("Заказ не найден", 404);
+    const updated = store.orders.find((item) => item.id === id);
+    return jsonOk(updated);
+  } catch (error) {
+    return jsonError(
+      error instanceof Error ? error.message : "Не удалось обновить заказ",
+      500,
+    );
   }
-
-  const updated = store.orders.find((item) => item.id === id);
-  return NextResponse.json(updated);
 }

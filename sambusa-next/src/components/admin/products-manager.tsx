@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { ProductImageField } from "@/components/admin/product-image-field";
 import { useAdminStore } from "@/components/admin/use-admin-store";
+import { adminFetch, readApiError } from "@/lib/admin-fetch";
 import {
   ADMIN_PLACEHOLDER_OPTIONS,
   ADMIN_SECTION_LABELS,
@@ -35,11 +36,12 @@ const EMPTY_DRAFT: ProductDraft = {
 };
 
 export function ProductsManager({ initial }: { initial?: import("@/types/store").DataStore }) {
-  const { store, loading, error, reload } = useAdminStore(initial);
+  const { store, loading, error, reload, setStore } = useAdminStore(initial);
   const [modalOpen, setModalOpen] = useState(false);
   const [draft, setDraft] = useState<ProductDraft>(EMPTY_DRAFT);
   const [isNew, setIsNew] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadingHover, setUploadingHover] = useState(false);
 
@@ -69,11 +71,14 @@ export function ProductsManager({ initial }: { initial?: import("@/types/store")
     setBusy(true);
     const form = new FormData();
     form.append("file", file);
-    const response = await fetch("/api/admin/upload", { method: "POST", body: form });
+    const response = await fetch("/api/admin/upload", {
+      method: "POST",
+      body: form,
+      cache: "no-store",
+    });
     setBusy(false);
     if (!response.ok) {
-      const data = (await response.json().catch(() => null)) as { error?: string } | null;
-      throw new Error(data?.error ?? "Ошибка загрузки");
+      throw new Error(await readApiError(response));
     }
     const data = (await response.json()) as { url: string };
     setDraft((prev) => {
@@ -91,6 +96,7 @@ export function ProductsManager({ initial }: { initial?: import("@/types/store")
 
   async function saveProduct() {
     setSaving(true);
+    setSaveError(null);
     const payload = { ...draft };
     if (payload.image) {
       delete payload.placeholder;
@@ -109,30 +115,63 @@ export function ProductsManager({ initial }: { initial?: import("@/types/store")
       if (!payload.hoverImage) delete payload.hoverImage;
     }
 
-    const response = await fetch(
-      isNew ? "/api/admin/products" : `/api/admin/products/${draft.id}`,
-      {
-        method: isNew ? "POST" : "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      },
-    );
-    setSaving(false);
-    if (!response.ok) return;
-    setModalOpen(false);
-    await reload();
+    try {
+      const response = await adminFetch(
+        isNew ? "/api/admin/products" : `/api/admin/products/${draft.id}`,
+        {
+          method: isNew ? "POST" : "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
+      const saved = (await response.json()) as StoreProduct;
+      setStore((prev) => {
+        if (!prev) return prev;
+        if (isNew) {
+          return { ...prev, products: [...prev.products, saved] };
+        }
+        return {
+          ...prev,
+          products: prev.products.map((item) => (item.id === saved.id ? saved : item)),
+        };
+      });
+      setModalOpen(false);
+      try {
+        await reload();
+      } catch {
+        /* локальный стейт уже обновлён ответом API */
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Не удалось сохранить товар";
+      setSaveError(message);
+      window.alert(message);
+    } finally {
+      setSaving(false);
+    }
   }
 
   async function deleteProduct(id: string) {
     if (!window.confirm("Удалить товар?")) return;
-    await fetch(`/api/admin/products/${id}`, { method: "DELETE" });
-    await reload();
+    try {
+      await adminFetch(`/api/admin/products/${id}`, { method: "DELETE" });
+      setStore((prev) =>
+        prev ? { ...prev, products: prev.products.filter((item) => item.id !== id) } : prev,
+      );
+      try {
+        await reload();
+      } catch {
+        /* keep local state */
+      }
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Не удалось удалить товар");
+    }
   }
 
   return (
     <AdminShell title="Управление товарами">
       {loading && <p className="text-sm text-neutral-500">Загрузка…</p>}
       {error && <p className="text-sm text-red-600">{error}</p>}
+      {saveError && <p className="mb-3 text-sm text-red-600">{saveError}</p>}
 
       {!loading && store && (
         <>

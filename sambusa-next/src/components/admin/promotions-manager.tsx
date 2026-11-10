@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { AdminShell } from "@/components/admin/admin-shell";
 import { useAdminStore } from "@/components/admin/use-admin-store";
+import { adminFetch } from "@/lib/admin-fetch";
 import { ADMIN_SECTION_LABELS } from "@/lib/admin-section-labels";
 import type { MenuSectionId } from "@/types";
 import type { Promotion, PromotionTargetType } from "@/types/store";
@@ -36,18 +37,26 @@ export function PromotionsManager({ initial }: { initial?: import("@/types/store
   });
 
   async function createPromotion() {
-    await fetch("/api/admin/promotions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(draft),
-    });
-    await reload();
+    try {
+      await adminFetch("/api/admin/promotions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(draft),
+      });
+      await reload();
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Не удалось создать акцию");
+    }
   }
 
   async function removePromotion(id: string) {
     if (!window.confirm("Удалить акцию?")) return;
-    await fetch(`/api/admin/promotions/${id}`, { method: "DELETE" });
-    await reload();
+    try {
+      await adminFetch(`/api/admin/promotions/${id}`, { method: "DELETE" });
+      await reload();
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Не удалось удалить акцию");
+    }
   }
 
   const products = store?.products ?? [];
