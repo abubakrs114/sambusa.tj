@@ -10,6 +10,7 @@
     "test:whatsapp": "node scripts/test-whatsapp.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.2.0",
     "framer-motion": "^14.7.1",
     "lucide-react": "^1.62.0",
     "next": "16.4.3",

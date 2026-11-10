@@ -2,6 +2,7 @@ import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { connection } from "next/server";
 
+import { getStore, isDatabaseConfigured, setStore } from "@/lib/db";
 import { normalizeProductImageUrl } from "@/lib/normalize-image-url";
 import { normalizeDataStore } from "@/lib/store/categories";
 import {
@@ -12,9 +13,6 @@ import {
 } from "@/lib/store/paths";
 import { createSeedStore } from "@/lib/store/seed";
 import type { DataStore } from "@/types/store";
-
-/** Кэш в памяти процесса (один warm serverless-инстанс на Vercel). */
-let memoryStore: DataStore | null = null;
 
 function cloneStore(store: DataStore): DataStore {
   return structuredClone(store);
@@ -32,6 +30,10 @@ function sanitizeStoreImagePaths(store: DataStore): DataStore {
   return store;
 }
 
+function prepareStore(store: DataStore): DataStore {
+  return sanitizeStoreImagePaths(normalizeDataStore(store));
+}
+
 async function storeFileExists(filePath: string): Promise<boolean> {
   try {
     await access(filePath);
@@ -45,13 +47,13 @@ function parseStoreJson(raw: string): DataStore | null {
   try {
     const parsed = JSON.parse(raw) as DataStore;
     if (parsed?.version !== 1) return null;
-    return sanitizeStoreImagePaths(normalizeDataStore(parsed));
+    return prepareStore(parsed);
   } catch {
     return null;
   }
 }
 
-/** Чтение без mkdir — безопасно для Vercel read-only. */
+/** Fallback: локальный /tmp или data/store.json. */
 async function readStoreFromDisk(): Promise<DataStore | null> {
   for (const filePath of getStoreReadPaths()) {
     if (!(await storeFileExists(filePath))) continue;
@@ -68,37 +70,7 @@ async function readStoreFromDisk(): Promise<DataStore | null> {
   return null;
 }
 
-export async function readDataStore(): Promise<DataStore> {
-  await connection();
-
-  if (memoryStore) {
-    return cloneStore(memoryStore);
-  }
-
-  const existing = await readStoreFromDisk();
-  if (existing) {
-    memoryStore = cloneStore(existing);
-    return cloneStore(existing);
-  }
-
-  const seed = createSeedStore();
-  memoryStore = cloneStore(seed);
-
-  if (!isVercelRuntime()) {
-    try {
-      await writeDataStore(seed);
-    } catch (error) {
-      console.warn("[store] could not seed local store.json:", error);
-    }
-  }
-
-  return cloneStore(seed);
-}
-
-export async function writeDataStore(store: DataStore): Promise<void> {
-  normalizeDataStore(store);
-  sanitizeStoreImagePaths(store);
-
+async function writeStoreToDisk(store: DataStore): Promise<void> {
   const targetFile = getStoreWritePath();
   const targetDir = path.dirname(targetFile);
   const payload = `${JSON.stringify(store, null, 2)}\n`;
@@ -110,25 +82,57 @@ export async function writeDataStore(store: DataStore): Promise<void> {
     await writeFile(targetFile, payload, "utf8");
   } catch (error) {
     if (isVercelRuntime()) {
-      try {
-        await writeFile(STORE_FILE_TMP, payload, "utf8");
-      } catch (retryError) {
-        console.error("[store] failed to write /tmp/store.json:", retryError);
-        throw new Error(
-          "Не удалось сохранить данные на сервере (файловая система Vercel). Ошибка: " +
-            (retryError instanceof Error ? retryError.message : String(retryError)),
-        );
-      }
-    } else {
-      console.error("[store] failed to write store:", error);
+      await writeFile(STORE_FILE_TMP, payload, "utf8");
+      return;
+    }
+    throw error;
+  }
+}
+
+export async function readDataStore(): Promise<DataStore> {
+  await connection();
+
+  if (isDatabaseConfigured()) {
+    try {
+      const fromDb = await getStore();
+      return cloneStore(prepareStore(fromDb));
+    } catch (error) {
+      console.warn("[store] PostgreSQL read failed, fallback to file:", error);
+    }
+  }
+
+  const fromDisk = await readStoreFromDisk();
+  if (fromDisk) return cloneStore(fromDisk);
+
+  const seed = createSeedStore();
+  return cloneStore(prepareStore(seed));
+}
+
+export async function writeDataStore(store: DataStore): Promise<void> {
+  const prepared = prepareStore(store);
+
+  if (isDatabaseConfigured()) {
+    try {
+      await setStore(prepared);
+      return;
+    } catch (error) {
+      console.error("[store] PostgreSQL write failed:", error);
       throw new Error(
-        "Не удалось сохранить store.json: " +
+        "Не удалось сохранить данные в PostgreSQL: " +
           (error instanceof Error ? error.message : String(error)),
       );
     }
   }
 
-  memoryStore = cloneStore(store);
+  try {
+    await writeStoreToDisk(prepared);
+  } catch (error) {
+    console.error("[store] failed to write store.json:", error);
+    throw new Error(
+      "Не удалось сохранить store.json: " +
+        (error instanceof Error ? error.message : String(error)),
+    );
+  }
 }
 
 export async function updateDataStore(
@@ -137,5 +141,5 @@ export async function updateDataStore(
   const store = await readDataStore();
   await mutator(store);
   await writeDataStore(store);
-  return cloneStore(store);
+  return cloneStore(prepareStore(store));
 }
